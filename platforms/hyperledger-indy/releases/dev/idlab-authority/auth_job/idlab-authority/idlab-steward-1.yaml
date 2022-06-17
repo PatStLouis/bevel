@@ -1,0 +1,35 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: idlab-authority-idlab-steward-1-auth-job
+  annotations:
+    fluxcd.io/automated: "false"
+  namespace: idlab-authority-ns
+spec:
+  releaseName: idlab-authority-idlab-steward-1-auth-job
+  chart:
+    path: platforms/hyperledger-indy/charts/indy-auth-job
+    git: https://github.com/PatStLouis/bevel.git
+    ref: local
+  values:
+    metadata:
+      name: idlab-authority-idlab-steward-1-auth-job
+      namespace: idlab-authority-ns
+    network:
+      name: idlab-dev
+      kubernetes_url: https://10.0.20.51:6443
+    image:
+      name: idlab-authority
+      repository: alpine:3.9.4
+    vault:
+      address: https://vault.interop.idlab.app
+      identity: idlab-steward-1
+      admin_auth_path: kubernetes-idlab-authority-admin-auth
+      policy: idlab-authority-idlab-steward-1-ro
+      policy_content: path \"/idlab-authority/data/stewards/idlab-steward-1/*\" { capabilities = [ \"read\", \"list\" ] }
+      auth_path: kubernetes-idlab-authority-idlab-steward-1-auth
+    account:
+      admin_service: idlab-authority-admin-vault-auth
+      admin_role: rw
+      service: idlab-authority-idlab-steward-1-vault-auth
+      role: ro
