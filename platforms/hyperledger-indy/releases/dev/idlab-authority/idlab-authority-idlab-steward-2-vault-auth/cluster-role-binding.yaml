@@ -1,0 +1,15 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: idlab-authority-idlab-steward-2-vault-auth-role-binding
+  namespace: idlab-authority-ns
+  labels:
+    organization: idlab-authority
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+- kind: ServiceAccount
+  name: idlab-authority-idlab-steward-2-vault-auth
+  namespace: idlab-authority-ns
