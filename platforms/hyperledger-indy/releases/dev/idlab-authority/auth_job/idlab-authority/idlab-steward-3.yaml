@@ -10,7 +10,7 @@ spec:
   chart:
     path: platforms/hyperledger-indy/charts/indy-auth-job
     git: https://github.com/PatStLouis/bevel.git
-    ref: local
+    ref: bevel-demo
   values:
     metadata:
       name: idlab-authority-idlab-steward-3-auth-job
